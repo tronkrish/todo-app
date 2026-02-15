@@ -1,6 +1,8 @@
+import { useAuth } from '../context/AuthContext';
 import './Header.css';
 
 export default function Header({ todos }) {
+    const { user, logout } = useAuth();
     const total = todos.length;
     const completed = todos.filter((t) => t.completed).length;
     const pending = total - completed;
@@ -9,9 +11,15 @@ export default function Header({ todos }) {
     return (
         <header className="header">
             <div className="header-content">
-                <div className="header-title">
-                    <span className="header-icon">✦</span>
-                    <h1>Todo App</h1>
+                <div className="header-top">
+                    <div className="header-title">
+                        <span className="header-icon">✦</span>
+                        <h1>Todo App</h1>
+                    </div>
+                    <div className="user-section">
+                        <span className="user-name">👋 {user?.name}</span>
+                        <button className="logout-btn" onClick={logout}>Sign Out</button>
+                    </div>
                 </div>
                 <p className="header-subtitle">Stay organized, stay productive</p>
                 <div className="header-stats">

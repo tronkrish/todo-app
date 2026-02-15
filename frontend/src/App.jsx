@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from './context/AuthContext';
 import { todoApi } from './api/todoApi';
+import LoginPage from './pages/LoginPage';
 import Header from './components/Header';
 import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
 import './App.css';
 
 function App() {
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,8 +16,10 @@ function App() {
   const [notification, setNotification] = useState(null);
 
   useEffect(() => {
-    fetchTodos();
-  }, []);
+    if (isAuthenticated) {
+      fetchTodos();
+    }
+  }, [isAuthenticated]);
 
   const showNotification = (message, type = 'success') => {
     setNotification({ message, type });
@@ -28,7 +33,7 @@ function App() {
       setTodos(data);
       setError(null);
     } catch (err) {
-      setError('Failed to load todos. Make sure the backend is running.');
+      setError('Failed to load todos. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -73,6 +78,23 @@ function App() {
       showNotification('Failed to delete todo', 'error');
     }
   };
+
+  // Show loading while checking auth
+  if (authLoading) {
+    return (
+      <div className="app">
+        <div className="loading">
+          <div className="spinner"></div>
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login page if not authenticated
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
 
   return (
     <div className="app">
