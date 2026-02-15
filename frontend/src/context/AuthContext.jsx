@@ -6,17 +6,25 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(localStorage.getItem('token'));
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(!!localStorage.getItem('token'));
 
     useEffect(() => {
         if (token) {
+            // Set a timeout so we don't wait forever for cold-start backends
+            const timeout = setTimeout(() => {
+                setLoading(false);
+            }, 5000);
+
             authApi.getMe(token)
                 .then((data) => setUser(data))
                 .catch(() => {
                     localStorage.removeItem('token');
                     setToken(null);
                 })
-                .finally(() => setLoading(false));
+                .finally(() => {
+                    clearTimeout(timeout);
+                    setLoading(false);
+                });
         } else {
             setLoading(false);
         }
