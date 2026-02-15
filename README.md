@@ -140,10 +140,11 @@ VITE_API_URL=https://your-backend.onrender.com
 
 ## 🧑‍💻 Author
 
-**Krishna** — [@tronkrish](https://github.com/tronkrish)
+**Sriprasanna** — [@tronkrish](https://github.com/tronkrish)
 
 ---
 
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
+
