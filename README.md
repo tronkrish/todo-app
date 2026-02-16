@@ -2,7 +2,7 @@
 
 A modern, full-stack Todo application with **user authentication**, built with React and Spring Boot.
 
-🔗 **[Live Demo](https://todo-app-seven-taupe-85.vercel.app)** · 💻 **[Source Code](https://github.com/tronkrish/todo-app)**
+🔗 **[Live Demo](https://todo-app-blue-one-42.vercel.app)** · 💻 **[Source Code](https://github.com/tronkrish/todo-app)**
 
 ---
 
